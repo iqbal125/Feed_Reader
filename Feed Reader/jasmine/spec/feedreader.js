@@ -27,9 +27,9 @@ $(function() {
         });
 
 
-        /* TODO: Write a test that loops through each feed
-         * in the allFeeds object and ensures it has a URL defined
-         * and that the URL is not empty.
+        /*
+         Iterates over allFeeds array and makes sure each object has a url property
+         ALso makes sure that the url property has a value and is not 0
          */
          it("url defined", function() {
              for(var i = 0;i < allFeeds.length;i++){
@@ -39,9 +39,9 @@ $(function() {
            })
 
 
-        /* TODO: Write a test that loops through each feed
-         * in the allFeeds object and ensures it has a name defined
-         * and that the name is not empty.
+        /*
+        Iterates over allFeeds array and makes sure each object has a name property
+        Also makes sure that the name property has a value and is not 0
          */
          it('name defined and not empty' , function(){
            for(var i = 0; i < allFeeds.length; i++){
@@ -51,23 +51,19 @@ $(function() {
         });
 
 
-    /* TODO: Write a new test suite named "The menu" */
     describe("The Menu", function() {
-        /* TODO: Write a test that ensures the menu element is
-         * hidden by default. You'll have to analyze the HTML and
-         * the CSS to determine how we're performing the
-         * hiding/showing of the menu element.
+        /*
+        This test is to see if the body container in index.html has a class of "menu-hidden"
          */
          it("menu hidden", function() {
            expect($('body').hasClass('menu-hidden')).toBe(true);
          });
        })
 
-         /* TODO: Write a test that ensures the menu changes
-          * visibility when the menu icon is clicked. This test
-          * should have two expectations: does the menu display when
-          * clicked and does it hide when clicked again.
-          */
+         /*
+         This test is to see if when the  menu icon is clicked it will remove the menu-hidden class from the body container
+         and adds the class back when it is clicked again.
+         */
           it('visibilty on click', function(){
             //When the menu icon is clicked, it makes sure that the class that makes it hidden is removed
             $('.menu-icon-link').click();
@@ -76,21 +72,46 @@ $(function() {
             $('.menu-icon-link').click();
             expect($('body').hasClass('menu-hidden')).toBe(true);
           });
-    /* TODO: Write a new test suite named "Initial Entries" */
+
+
     describe("Initial Entries", function () {
-      
-    })
-        /* TODO: Write a test that ensures when the loadFeed
-         * function is called and completes its work, there is at least
-         * a single .entry element within the .feed container.
-         * Remember, loadFeed() is asynchronous so this test will require
-         * the use of Jasmine's beforeEach and asynchronous done() function.
-         */
 
-    /* TODO: Write a new test suite named "New Feed Selection"
 
-        /* TODO: Write a test that ensures when a new feed is loaded
-         * by the loadFeed function that the content actually changes.
-         * Remember, loadFeed() is asynchronous.
+        /*
+        This test will check to see that when the asynchronous function loadFeed in app.js finishes
+        that there is one entry element in the feed container
          */
+         beforeEach(function(done) {
+           loadFeed(0, done);
+          });
+
+          it('At least a one .entry element in the .feed container', function(){
+          expect($('.feed .entry').length).toBeGreaterThan(0);
+      })
+    });
+
+
+    describe("New Feed Selection", function(){
+
+
+        var initFeed;
+        /*
+        This test checks checks to see that new content is loaded when the loadFeed function finishes.
+        It tests this by checking a loadFeed with the ID of 1 and a loadFeed with the ID of 2 and testing
+        to see that they are not equal.
+         */  beforeEach(function(done) {
+             loadFeed(1, function() {
+               initFeed = $(".feed").html();
+             });
+             done();
+            });
+
+            it("The feed content changed", function(done){
+              loadFeed(2, done)
+              expect($(".feed").html()).not.toEqual(initFeed);
+            })
+
+          })
+
+
 }());
