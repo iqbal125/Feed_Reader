@@ -21,50 +21,44 @@ $(function() {
          * allFeeds in app.js to be an empty array and refresh the
          * page?
          */
-        it('are defined', function() {
-            expect(allFeeds).toBeDefined();
-            expect(allFeeds.length).not.toBe(0);
-        });
+         it('are defined', function() {
+             expect(allFeeds).toBeDefined();
+             expect(allFeeds.length).not.toBe(0);
+             });
 
 
-        /*
-         Iterates over allFeeds array and makes sure each object has a url property
-         ALso makes sure that the url property has a value and is not 0
+         /* Iterates over allFeeds array and makes sure each object has a url property
+            ALso makes sure that the url property has a value and is not 0
          */
          it("url defined", function() {
              for(var i = 0;i < allFeeds.length;i++){
-               expect(allFeeds[i].url).toBeDefined();
-               expect(allFeeds[i].url.length).not.toBe(0);
-             }})
-           })
+                expect(allFeeds[i].url).toBeDefined();
+                expect(allFeeds[i].url.length).not.toBe(0);
+             }});
 
 
-        /*
-        Iterates over allFeeds array and makes sure each object has a name property
-        Also makes sure that the name property has a value and is not 0
+         /* Iterates over allFeeds array and makes sure each object has a name property
+           Also makes sure that the name property has a value and is not 0
          */
          it('name defined and not empty' , function(){
            for(var i = 0; i < allFeeds.length; i++){
              expect(allFeeds[i].name).toBeDefined();
              expect(allFeeds[i].name.length).not.toBe(0);
-           }
-        });
+              }
+           });
+      });
 
 
     describe("The Menu", function() {
-        /*
-        This test is to see if the body container in index.html has a class of "menu-hidden"
+         /* This test is to see if the body container in index.html has a class of "menu-hidden"
          */
          it("menu hidden", function() {
            expect($('body').hasClass('menu-hidden')).toBe(true);
-         });
-       })
-
-         /*
-         This test is to see if when the  menu icon is clicked it will remove the menu-hidden class from the body container
-         and adds the class back when it is clicked again.
+            });
+         /* This test is to see if when the  menu icon is clicked it will remove the menu-hidden class from the body container
+            and adds the class back when it is clicked again.
          */
-          it('visibilty on click', function(){
+         it('visibilty on click', function(){
             //When the menu icon is clicked, it makes sure that the class that makes it hidden is removed
             $('.menu-icon-link').click();
             expect($('body').hasClass('menu-hidden')).toBe(false);
@@ -72,22 +66,20 @@ $(function() {
             $('.menu-icon-link').click();
             expect($('body').hasClass('menu-hidden')).toBe(true);
           });
+    });
 
 
     describe("Initial Entries", function () {
-
-
-        /*
-        This test will check to see that when the asynchronous function loadFeed in app.js finishes
-        that there is one entry element in the feed container
-         */
-         beforeEach(function(done) {
+        /* This test will check to see that when the asynchronous function loadFeed in app.js finishes
+           that there is one entry element in the feed container.
+        */
+        beforeEach(function(done) {
            loadFeed(0, done);
           });
 
-          it('At least a one .entry element in the .feed container', function(){
-          expect($('.feed .entry').length).toBeGreaterThan(0);
-      })
+         it('At least a one .entry element in the .feed container', function(){
+           expect($('.feed .entry').length).toBeGreaterThan(0);
+      });
     });
 
 
@@ -95,23 +87,20 @@ $(function() {
 
 
         var initFeed;
-        /*
-        This test checks checks to see that new content is loaded when the loadFeed function finishes.
-        It tests this by checking a loadFeed with the ID of 1 and a loadFeed with the ID of 2 and testing
-        to see that they are not equal.
-         */  beforeEach(function(done) {
-             loadFeed(1, function() {
-               initFeed = $(".feed").html();
-             });
-             done();
-            });
+        /* This test checks checks to see that new content is loaded when the loadFeed function finishes.
+           It tests this by checking a loadFeed with the ID of 1 and a loadFeed with the ID of 2 and testing
+           to see that they are not equal.
+        */
+         beforeEach(function(done) {
+           loadFeed(1, function() {
+           initFeed = $(".feed").html();
+              });
+           done();
+          });
 
-            it("The feed content changed", function(done){
-              loadFeed(2, done)
-              expect($(".feed").html()).not.toEqual(initFeed);
-            })
-
-          })
-
-
+         it("The feed content changed", function(done){
+           loadFeed(2, done);
+           expect($(".feed").html()).not.toEqual(initFeed);
+         });
+     });
 }());
