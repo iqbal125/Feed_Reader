@@ -74,9 +74,15 @@ $(function () {
     /* This test will check to see that when the asynchronous function loadFeed in app.js finishes
        that there is one entry element in the feed container.
     */
+    beforeEach(function(done) {
+      loadFeed(0, function() {
+        done();
+      });
+    });
 
-    it('At least a one .entry element in the .feed container', function () {
+    it('At least a one .entry element in the .feed container', function (done) {
       expect($('.feed .entry').length).toBeGreaterThan(0);
+      done();
     });
   });
 
@@ -86,19 +92,22 @@ $(function () {
 
     var initFeed;
     /* This test checks checks to see that new content is loaded when the loadFeed function finishes.
-       It tests this by checking a loadFeed with the ID of 1 and a loadFeed with the ID of 2 and testing
+       It tests this by checking a loadFeed with the ID of 0 and a loadFeed with the ID of 1 and testing
        to see that they are not equal.
     */
     beforeEach(function (done) {
-      loadFeed(1, function () {
+      loadFeed(0, function () {
         initFeed = $(".feed").html();
+        loadFeed(1, function(){
+          done();
+        })
       });
-      done();
     });
 
     it("The feed content changed", function (done) {
-      loadFeed(2, done);
+      loadFeed(1, done);
       expect($(".feed").html()).not.toEqual(initFeed);
+      done();
     });
   });
 } ());
