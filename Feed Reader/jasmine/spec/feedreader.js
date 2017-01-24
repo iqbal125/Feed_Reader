@@ -75,14 +75,11 @@ $(function () {
        that there is one entry element in the feed container.
     */
     beforeEach(function(done) {
-      loadFeed(0, function() {
-        done();
-      });
+      loadFeed(0, done);
     });
 
-    it('At least a one .entry element in the .feed container', function (done) {
+    it('At least a one .entry element in the .feed container', function () {
       expect($('.feed .entry').length).toBeGreaterThan(0);
-      done();
     });
   });
 
@@ -104,10 +101,8 @@ $(function () {
       });
     });
 
-    it("The feed content changed", function (done) {
-      loadFeed(1, done);
+    it("The feed content changed", function () {
       expect($(".feed").html()).not.toEqual(initFeed);
-      done();
     });
   });
 } ());
